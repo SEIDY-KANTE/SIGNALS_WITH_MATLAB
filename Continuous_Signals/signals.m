@@ -6,21 +6,43 @@ clc;        % Clean Command Window - Clears the contents of the command window
 t = -10:0.01:10; % Generate a time vector from -10 to 10 with a step of 0.01
 
 % Compute the operations on signals
-result_a = signal_x(t) - 2 * signal_y(t);   % Calculate the result of x(t) - 2y(t)
-result_b = t .* signal_y(t);                % Calculate the result of t.y(t)
-result_c = signal_y(t) .* heaviside(t);     % Calculate the result of y(t).u(t)
-result_d = signal_y(-2.*t+3);               % Calculate the result of y(-2t+3)
+result_a = signal_x(t) - 2 * signal_y(t);  % Calculate the result of x(t) - 2y(t)
+result_b = t .* signal_y(t);               % Calculate the result of t.y(t)
+result_c = signal_y(t) .* (t >= 0);        % Calculate the result of y(t).u(t)
+result_d = signal_y(-2.*t+3);              % Calculate the result of y(-2t+3)
 
-% Create a new figure for plotting
-figure;
+% Plotting using object-oriented approach
+figure("WindowState","maximized");
 
-% Call the 'plotFig' function to plot the signals and results
-plotFig(t, signal_x(t), 1, "x(t)", "b");      % Plot x(t)
-plotFig(t, signal_y(t), 2, "y(t)", "r");      % Plot y(t)
-plotFig(t, result_a, 3, "x(t) - 2y(t)", "k"); % Plot x(t) - 2y(t)
-plotFig(t, result_b, 4, "t . y(t)", "r");     % Plot t . y(t)
-plotFig(t, result_c, 5, "y(t).u(t)", "g");    % Plot y(t).u(t)
-plotFig(t, result_d, 6, "y(-2t + 3)", "m");   % Plot y(-2t + 3)
+% Create an array of titles
+titles = {'x(t)', 'y(t)', 'x(t) - 2y(t)', 't . y(t)', 'y(t).u(t)', 'y(-2t + 3)'};
+
+% Create an array of colors
+colors= {'b','r','k','c','g','m'};
+
+% Create an array of functions
+signals_obj = {@signal_x, @signal_y, @(t) result_a, @(t) result_b, @(t) result_c, @(t) result_d};
+
+%% For Loop to plot each signal
+for i = 1:numel(signals_obj) 
+
+    % Create a subplot with 6 rows, 1 column, and select the specified subplot position
+    subplot(6, 1, i); 
+  
+    signal_t = signals_obj{i}(t); % Get a specific signal
+
+    % Plot the continuous signal with the specified color and line width
+    plot(t, signal_t,colors{i},LineWidth=2);
+    
+    % Set the title of the subplot with a dynamic title
+    title(sprintf("Continuous signal: %s", titles{i}));
+
+    ylabel(titles{i});   % Set the y-axis label based on the input title
+    xlabel('t');  % Set the x-axis label as "t"
+    grid on;  % Enable the grid on the plot
+
+    % End the For-Loop
+end
 
 %% Define a custom functions
 
@@ -37,28 +59,4 @@ end
 % Define the ramp function
 function r = ramp(t)
     r = t .* (t >= 0);
-end
-
-% Define the plot function
-function plotFig(t, signal_t, pos, tit, color)
-
-    % Create a subplot with 6 rows, 1 column, and select the specified subplot position
-    subplot(6, 1, pos);
-
-    % Plot the continuous signal with the specified color and line width
-    plot(t, signal_t, Color = color, LineWidth = 2);
-
-    % Set the title of the subplot with a dynamic title
-    title(sprintf("Continuous signal: %s", tit));
-
-    % Set the y-axis label based on the input title
-    ylabel(tit);
-
-    % Set the x-axis label as "t"
-    xlabel("t");
-
-    % Enable the grid on the plot
-    grid on;
-
-    % End the 'plotFig' function
 end
