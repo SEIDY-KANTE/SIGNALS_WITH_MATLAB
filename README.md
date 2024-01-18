@@ -1,5 +1,6 @@
 # SIGNALS_WITH_MATLAB
-## REPORT <a href="https://github.com/SEIDY-KANTE/SIGNALS_WITH_MATLAB/blob/main/Report.pdf">Click here</a>
+## REPORT 1 <a href="https://github.com/SEIDY-KANTE/SIGNALS_WITH_MATLAB/blob/main/Report.pdf">Click here</a>
+## REPORT 2 (Gender Recognition and Audio Filtering) <a href="https://github.com/SEIDY-KANTE/SIGNALS_WITH_MATLAB/blob/main/Gender_Recognition_And_Audio_Filtering.pdf">Click here</a>
 
 ## Mp3_Signals_Comparison
 <img src="https://github.com/SEIDY-KANTE/SIGNALS_WITH_MATLAB/blob/main/Outputs/Visual_Evoked_Response.png" alt="Visual Evoked Response Output"/>
